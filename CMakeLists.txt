@@ -74,3 +74,21 @@ foreach(SRC ${SRCs})
     endif()
 endforeach()
 
+set(FOLDER_NAME "binary_search")
+file(GLOB HEADERs "${FOLDER_NAME}/*.h" "${FOLDER_NAME}/*.hpp")
+file(GLOB SRCs "${FOLDER_NAME}/*.cc" "${FOLDER_NAME}/*.cpp")
+foreach(SRC ${SRCs})
+    get_filename_component(SRC_FILENAME_WE ${SRC} NAME_WE)
+    set(BIN_NAME "${PROJECT_NAME}_${FOLDER_NAME}_${SRC_FILENAME_WE}")
+    message(STATUS "Compiling for ${BIN_NAME} ...")
+    add_executable(${BIN_NAME} ${HEADERs} ${SRC})
+    target_link_libraries(${BIN_NAME} gtest_main)
+    if (SRC_FILENAME_WE MATCHES "^test_")
+        message(STATUS "Add a test for ${SRC} ...")
+        add_test(
+            NAME "${BIN_NAME}_test"
+            COMMAND $<TARGET_FILE:${BIN_NAME}>
+            )
+    endif()
+endforeach()
+
