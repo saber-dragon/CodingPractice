@@ -50,6 +50,28 @@ namespace saber {
          }
          return std::min({gap, shortestDistance1, shortestDistance2});
     }
+    template <typename It>
+    auto kth_shortest_distance(It first, It last, size_t k) -> typename std::iterator_traits<It>::value_type
+    {
+        using T = typename std::iterator_traits<It>::value_type;
+        auto d = std::distance(first, last);
+        assert(d > 1 && k > 0 && k <= d * (d - 1) / 2);
+        if (d == 2) return std::abs(*(first + 1) - *first);
+
+        std::sort(first, last);// sort
+        auto low = 0, upper = *(last - 1) - *first;
+        while (low != upper) {
+            auto middle = low + (upper - low) / 2;
+            size_t count = 0;
+
+            for(auto it = first;it != last - 1;++it){
+                count += std::distance(it + 1, std::upper_bound(it + 1, last, *it + middle));
+            }
+            if (count >= k) upper = middle;
+            else if (count < k) low = middle + 1;
+        }
+        return low;
+    }
 
 }
 #endif // SHORTEST_DISTANCE_1D_HPP
