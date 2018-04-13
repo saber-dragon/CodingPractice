@@ -12,5 +12,8 @@ int main(){
     cout << *(saber::search_rotated_sorted_array(v.begin(), v.end(), 1)) << endl;
     cout << *(saber::search_rotated_sorted_array(v.begin(), v.end(), 4)) << endl;
     cout << *(saber::search_rotated_sorted_array(v.begin(), v.end(), 9)) << endl;
+
+    vector<int> b{3,1};
+    cout << (saber::search_rotated_sorted_array(b.begin(), b.end(), 5) == b.end()) << endl;
     return 0;
 }

@@ -74,7 +74,7 @@ foreach(SRC ${SRCs})
     endif()
 endforeach()
 
-set(FOLDER_NAME "binary_search")
+set(FOLDER_NAME "search")
 file(GLOB HEADERs "${FOLDER_NAME}/*.h" "${FOLDER_NAME}/*.hpp")
 file(GLOB SRCs "${FOLDER_NAME}/*.cc" "${FOLDER_NAME}/*.cpp")
 foreach(SRC ${SRCs})

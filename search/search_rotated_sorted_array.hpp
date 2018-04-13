@@ -9,6 +9,7 @@ namespace saber {
     {
         using T = typename std::iterator_traits<It>::value_type;
         auto d =std::distance(first, last);
+        if (d == 0) return last;
         if (d == 1) return (*first == key)?first:last;
         
         auto l = first;
@@ -17,14 +18,13 @@ namespace saber {
 
         while (l != u){
             auto mid = l + std::distance(l, u) / 2;
-
             if (*l > *u) {
                 if (key == *u) return u;
                 else if (key < *u) {// key is located in the second half
                     if (key == *mid) return mid;
                     else if (key < *mid) {
                         if (*mid > *l) l = mid + 1;
-                        else u = mid - 1;
+                        else u = mid;
                     }
                     else {
                         l = mid + 1;
@@ -33,14 +33,14 @@ namespace saber {
                     if (key == *mid) return mid;
                     else if (key > *mid) {
                         if (*mid > *l) l = mid + 1;
-                        else u = mid - 1;
+                        else u = mid;
                     }
-                    else u = mid - 1;
+                    else u = mid;
                 }
             } else {// [i, u] is sorted
                 if (key == *mid) return mid;
                 else if (key > *mid) l = mid + 1;
-                else u = mid - 1;
+                else u = mid;
             }
         }
         return ((*l == key)?l:last);
